@@ -1,4 +1,3 @@
-
 // Referência ao banco de dados Firebase
 const db = firebase.database().ref('links');
 
