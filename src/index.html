@@ -4,94 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Links</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        a {
-            margin-right: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
     <!-- Adicionando Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js"></script>
-    <script>
-        // Sua configuração do Firebase
-        const firebaseConfig = {
-              apiKey: "AIzaSyCh-ZS_u5AEk1a8z8ZPY7LU9qavYOdmKbE",
-              authDomain: "impulso-aliexpress.firebaseapp.com",
-              projectId: "impulso-aliexpress",
-              storageBucket: "impulso-aliexpress.appspot.com",
-              messagingSenderId: "354972574023",
-              appId: "1:354972574023:web:befcb8ca29ce101bbeac62",
-              measurementId: "G-E4JP58Z82R"
-            };
-
-        // Inicializando o Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
@@ -100,57 +19,6 @@
         <button onclick="adicionarLink()">Adicionar</button>
         <ul id="linkList"></ul>
     </div>
-    <script>
-        // Referência ao banco de dados Firebase
-        const db = firebase.database().ref('links');
-
-        let links = [];
-
-        // Carrega os links do Firebase ao iniciar
-        db.on('value', (snapshot) => {
-            const data = snapshot.val();
-            links = data ? Object.values(data) : [];
-            exibirLinks();
-        });
-
-        function adicionarLink() {
-            const linkInput = document.getElementById('linkInput');
-            const link = linkInput.value.trim();
-            
-            if (link && !links.includes(link)) {
-                links.push(link);
-                salvarLinks();
-                exibirLinks();
-                linkInput.value = '';
-            } else if (links.includes(link)) {
-                alert('Link já adicionado!');
-            }
-        }
-
-        function exibirLinks() {
-            const linkList = document.getElementById('linkList');
-            linkList.innerHTML = '';
-
-            links.forEach(link => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                const checkbox = document.createElement('input');
-
-                a.href = link;
-                a.textContent = link;
-                a.target = '_blank';
-
-                checkbox.type = 'checkbox';
-
-                li.appendChild(checkbox);
-                li.appendChild(a);
-                linkList.appendChild(li);
-            });
-        }
-
-        function salvarLinks() {
-            db.set(links);
-        }
-    </script>
+    <script type="module" src="scripts.js"></script>
 </body>
 </html>
